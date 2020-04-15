@@ -478,6 +478,12 @@ static BOOL disableRefreshingNotebooksCacheOnLaunch;
     [self unauthenticateAndRevokeAccessToken:YES];
 }
 
+- (void)resetAuthenticator
+{
+    self.authenticationCompletion = nil;
+    self.authenticator = nil;
+}
+
 - (void)unauthenticateWithoutRevokingAccessToken {
     [self unauthenticateAndRevokeAccessToken:NO];
 }
