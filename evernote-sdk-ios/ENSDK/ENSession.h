@@ -283,6 +283,8 @@ typedef NS_OPTIONS(NSUInteger, ENSessionSortOrder) {
  */
 - (void)unauthenticate;
 
+- (void)resetAuthenticator;
+
 /**
  *  Clear the preferences to a clean state, but not revoking the auth token
  *  Useful for multi platform apps to keep their token on the service
