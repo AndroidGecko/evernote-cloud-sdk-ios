@@ -1,4 +1,0 @@
-module EvernoteSDK {
-    umbrella header "/Users/marcinczech/coding/evernote-cloud-sdk-ios/evernote-sdk-ios/ENSDK/include/EvernoteSDK.h"
-    export *
-}
