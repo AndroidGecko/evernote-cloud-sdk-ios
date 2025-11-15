@@ -17,6 +17,9 @@ let package = Package(
         .target(
             name: "EvernoteSDK",
             path: "evernote-sdk-ios/ENSDK",
+            exclude: [
+                "SendToEvernoteActivity"
+            ],
             resources: [
                 .copy("../../ENSDKResources.bundle")
             ],

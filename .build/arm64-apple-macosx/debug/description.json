@@ -1,0 +1,74 @@
+{
+  "builtTestProducts" : [
+
+  ],
+  "copyCommands" : {
+    "/Users/marcinczech/coding/evernote-cloud-sdk-ios/.build/arm64-apple-macosx/debug/EvernoteSDK_EvernoteSDK.bundle/Info.plist" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/marcinczech/coding/evernote-cloud-sdk-ios/.build/arm64-apple-macosx/debug/EvernoteSDK.build/Info.plist"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/marcinczech/coding/evernote-cloud-sdk-ios/.build/arm64-apple-macosx/debug/EvernoteSDK_EvernoteSDK.bundle/Info.plist"
+        }
+      ]
+    },
+    "/Users/marcinczech/coding/evernote-cloud-sdk-ios/.build/arm64-apple-macosx/debug/EvernoteSDK_EvernoteSDK.bundle/en.lproj/ENSSKeychain.strings" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/marcinczech/coding/evernote-cloud-sdk-ios/evernote-sdk-ios/ENSDK/Private/3rdParty/SSKeychain/en.lproj/ENSSKeychain.strings"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/marcinczech/coding/evernote-cloud-sdk-ios/.build/arm64-apple-macosx/debug/EvernoteSDK_EvernoteSDK.bundle/en.lproj/ENSSKeychain.strings"
+        }
+      ]
+    }
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+
+  },
+  "targetDependencyMap" : {
+    "EvernoteSDK" : [
+
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+
+  },
+  "traitConfiguration" : {
+    "default" : {
+
+    }
+  },
+  "writeCommands" : {
+
+  }
+}
