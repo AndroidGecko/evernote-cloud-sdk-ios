@@ -3,6 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "EvernoteSDK",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v12)
     ],
