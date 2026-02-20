@@ -21,9 +21,6 @@ let package = Package(
                 "SendToEvernoteActivity"
             ],
             publicHeadersPath: ".",
-            resources: [
-                .copy("../../ENSDKResources.bundle")
-            ],
             cSettings: [
                 .headerSearchPath("."),
                 .headerSearchPath("Private"),
