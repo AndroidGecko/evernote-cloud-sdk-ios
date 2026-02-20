@@ -20,6 +20,7 @@ let package = Package(
             exclude: [
                 "SendToEvernoteActivity"
             ],
+            publicHeadersPath: ".",
             resources: [
                 .copy("../../ENSDKResources.bundle")
             ],
