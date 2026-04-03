@@ -38,6 +38,7 @@ let package = Package(
                 .linkedFramework("CoreServices"),
                 .linkedFramework("UIKit"),
                 .linkedFramework("WebKit"),
+                .linkedFramework("AuthenticationServices"),
                 .linkedLibrary("xml2")
             ]
         )

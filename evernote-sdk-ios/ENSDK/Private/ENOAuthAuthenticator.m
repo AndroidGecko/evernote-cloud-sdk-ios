@@ -36,6 +36,7 @@
 #import "ENGCOAuth.h"
 #import "NSString+URLEncoding.h"
 #import "ENSDKLogging.h"
+#import <AuthenticationServices/AuthenticationServices.h>
 
 #import "NSRegularExpression+ENAGRegex.h"
 
@@ -54,7 +55,7 @@ typedef NS_ENUM(NSInteger, ENOAuthAuthenticatorState) {
 
 NSString * ENOAuthAuthenticatorAuthInfoAppNotebookIsLinked = @"ENOAuthAuthenticatorAuthInfoAppNotebookIsLinked";
 
-@interface ENOAuthAuthenticator () <ENOAuthViewControllerDelegate, ENLoadingViewControllerDelegate>
+@interface ENOAuthAuthenticator () <ENOAuthViewControllerDelegate, ENLoadingViewControllerDelegate, ASWebAuthenticationPresentationContextProviding>
 @property (nonatomic, assign) BOOL inProgress;
 
 @property (nonatomic, assign) BOOL isCancelled;
@@ -62,6 +63,7 @@ NSString * ENOAuthAuthenticatorAuthInfoAppNotebookIsLinked = @"ENOAuthAuthentica
 @property (nonatomic, strong) UIViewController * hostViewController;
 @property (nonatomic, strong) UINavigationController * authenticationViewController;
 @property (nonatomic, strong) ENOAuthViewController * oauthViewController;
+@property (nonatomic, strong) ASWebAuthenticationSession * webAuthSession;
 
 @property (nonatomic, assign) ENOAuthAuthenticatorState state;
 
@@ -466,29 +468,44 @@ NSString * ENOAuthAuthenticatorAuthInfoAppNotebookIsLinked = @"ENOAuthAuthentica
 
 - (void)openOAuthViewControllerWithURL:(NSURL *)authorizationURL
 {
-    BOOL isSwitchAllowed = NO;
-    if([self.profiles count]>1) {
-        isSwitchAllowed = YES;
-    }
-    else {
-        isSwitchAllowed = NO;
-    }
-    if(!self.isSwitchingInProgress ) {
-        self.oauthViewController = [[ENOAuthViewController alloc] initWithAuthorizationURL:authorizationURL
-                                                                       oauthCallbackPrefix:[self oauthCallback]
-                                                                               profileName:self.currentProfile
-                                                                            allowSwitching:isSwitchAllowed
-                                                                                  delegate:self];
+    NSString *callbackScheme = [self callbackScheme];
 
-        // Replace the loading view with the OAuth view. Don't animate the transition, and don't leave the loading
-        // view on the view stack.
-        [self.authenticationViewController setViewControllers:@[self.oauthViewController] animated:NO];
-    }
-    else {
-        [self.oauthViewController updateUIForNewProfile:self.currentProfile withAuthorizationURL:authorizationURL];
-        self.isSwitchingInProgress = NO;
-        
-    }
+    self.webAuthSession = [[ASWebAuthenticationSession alloc] initWithURL:authorizationURL
+                                                       callbackURLScheme:callbackScheme
+                                                       completionHandler:^(NSURL * _Nullable callbackURL, NSError * _Nullable error) {
+        self.webAuthSession = nil;
+
+        if (error) {
+            if ([error.domain isEqualToString:ASWebAuthenticationSessionErrorDomain] &&
+                error.code == ASWebAuthenticationSessionErrorCodeCanceledLogin) {
+                [self completeAuthenticationWithError:[NSError errorWithDomain:ENErrorDomain
+                                                                         code:ENErrorCodeCancelled
+                                                                     userInfo:nil]];
+            } else {
+                [self completeAuthenticationWithError:error];
+            }
+            return;
+        }
+
+        if (callbackURL) {
+            [self getOAuthTokenForURL:callbackURL];
+        } else {
+            [self completeAuthenticationWithError:[NSError errorWithDomain:ENErrorDomain
+                                                                     code:ENErrorCodeUnknown
+                                                                 userInfo:nil]];
+        }
+    }];
+
+    self.webAuthSession.presentationContextProvider = self;
+    self.webAuthSession.prefersEphemeralWebBrowserSession = NO;
+    [self.webAuthSession start];
+}
+
+#pragma mark - ASWebAuthenticationPresentationContextProviding
+
+- (ASPresentationAnchor)presentationAnchorForWebAuthenticationSession:(ASWebAuthenticationSession *)session
+{
+    return self.hostViewController.view.window;
 }
 
 - (void)completeAuthenticationWithCredentials:(ENCredentials *)credentials usesLinkedAppNotebook:(BOOL)linkedAppNotebook
