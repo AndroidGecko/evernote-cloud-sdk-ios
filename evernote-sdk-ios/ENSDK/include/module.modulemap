@@ -1,0 +1,14 @@
+module EvernoteSDK {
+    header "../EvernoteSDK_All.h"
+    header "../ENSession.h"
+    header "../ENNotebook.h"
+    header "../ENNoteRef.h"
+    header "../ENNoteContent.h"
+    header "../ENNote.h"
+    header "../ENNoteSearch.h"
+    header "../ENResource.h"
+    header "../ENError.h"
+    header "../ENCommonUtils.h"
+    header "../ENSDKLogging.h"
+    export *
+}

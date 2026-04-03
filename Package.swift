@@ -20,7 +20,7 @@ let package = Package(
             exclude: [
                 "SendToEvernoteActivity"
             ],
-            publicHeadersPath: ".",
+            publicHeadersPath: "include",
             cSettings: [
                 .headerSearchPath("."),
                 .headerSearchPath("Private"),
