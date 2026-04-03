@@ -1,5 +1,4 @@
 module EvernoteSDK {
-    header "../EvernoteSDK_All.h"
     header "../ENSession.h"
     header "../ENNotebook.h"
     header "../ENNoteRef.h"
